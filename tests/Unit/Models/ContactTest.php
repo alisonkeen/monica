@@ -272,6 +272,72 @@ class ContactTest extends FeatureTestCase
         $contact->middle_name = 'H';
         $contact->last_name = 'Gregory';
         $contact->nickname = 'Rambo';
+        $contact->nameOrder('nickname_firstname_lastname');
+        $this->assertEquals(
+            'Rambo (Peter H Gregory)',
+            $contact->name
+        );
+
+        $contact = new Contact;
+        $contact->first_name = 'Peter';
+        $contact->middle_name = 'H';
+        $contact->last_name = null;
+        $contact->nickname = 'Rambo';
+        $contact->nameOrder('nickname_firstname_lastname');
+        $this->assertEquals(
+            'Rambo (Peter H)',
+            $contact->name
+        );
+
+        $contact = new Contact;
+        $contact->first_name = 'Peter';
+        $contact->middle_name = null;
+        $contact->last_name = 'Gregory';
+        $contact->nickname = 'Rambo';
+        $contact->nameOrder('nickname_firstname_lastname');
+        $this->assertEquals(
+            'Rambo (Peter Gregory)',
+            $contact->name
+        );
+
+        $contact = new Contact;
+        $contact->first_name = 'Peter';
+        $contact->middle_name = 'H';
+        $contact->last_name = 'Gregory';
+        $contact->nickname = 'Rambo';
+        $contact->nameOrder('nickname_lastname_firstname');
+        $this->assertEquals(
+            'Rambo (Gregory Peter H)',
+            $contact->name
+        );
+
+        $contact = new Contact;
+        $contact->first_name = 'Peter';
+        $contact->middle_name = 'H';
+        $contact->last_name = null;
+        $contact->nickname = 'Rambo';
+        $contact->nameOrder('nickname_lastname_firstname');
+        $this->assertEquals(
+            'Rambo (Peter H)',
+            $contact->name
+        );
+
+        $contact = new Contact;
+        $contact->first_name = 'Peter';
+        $contact->middle_name = null;
+        $contact->last_name = 'Gregory';
+        $contact->nickname = 'Rambo';
+        $contact->nameOrder('nickname_lastname_firstname');
+        $this->assertEquals(
+            'Rambo (Gregory Peter)',
+            $contact->name
+        );
+
+        $contact = new Contact;
+        $contact->first_name = 'Peter';
+        $contact->middle_name = 'H';
+        $contact->last_name = 'Gregory';
+        $contact->nickname = 'Rambo';
         $contact->nameOrder('nickname');
         $this->assertEquals(
             'Rambo',
@@ -449,6 +515,8 @@ class ContactTest extends FeatureTestCase
     /** @test */
     public function it_returns_the_url_of_the_avatar()
     {
+        config(['monica.adorable_api' => 'adorable_api']);
+
         // default
         $contact = factory(Contact::class)->create([
             'avatar_default_url' => 'defaultURL',
@@ -462,12 +530,12 @@ class ContactTest extends FeatureTestCase
 
         // adorable
         $contact = factory(Contact::class)->create([
-            'avatar_adorable_url' => 'adorableURL',
+            'avatar_adorable_url' => 'adorable_api/adorableURL',
             'avatar_source' => 'adorable',
         ]);
 
         $this->assertEquals(
-            'adorableURL',
+            'adorable_api/adorableURL',
             $contact->getAvatarURL()
         );
 
@@ -557,7 +625,7 @@ class ContactTest extends FeatureTestCase
             'contact_id' => $contact->id,
         ]));
 
-        $this->assertEquals(200, $contact->totalOutstandingDebtAmount());
+        $this->assertEquals(20000, $contact->totalOutstandingDebtAmount());
 
         $contact->debts()->save(new Debt([
             'in_debt' => 'yes',
@@ -566,7 +634,7 @@ class ContactTest extends FeatureTestCase
             'contact_id' => $contact->id,
         ]));
 
-        $this->assertEquals(100, $contact->totalOutstandingDebtAmount());
+        $this->assertEquals(10000, $contact->totalOutstandingDebtAmount());
     }
 
     /** @test */

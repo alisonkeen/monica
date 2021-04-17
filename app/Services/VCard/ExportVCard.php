@@ -9,6 +9,7 @@ use App\Models\Contact\Contact;
 use App\Interfaces\LabelInterface;
 use Sabre\VObject\Component\VCard;
 use App\Models\Contact\ContactFieldType;
+use App\Models\Contact\ContactFieldLabel;
 
 class ExportVCard extends BaseService
 {
@@ -250,10 +251,14 @@ class ExportVCard extends BaseService
     private function getContactFieldLabel(LabelInterface $labelProvider): ?array
     {
         $type = null;
-        if ($labelProvider->labels->count() > 0) {
+        $labels = $labelProvider->labels()->get();
+        if ($labels->count() > 0) {
             $type = [];
-            $type['type'] = $labelProvider->labels->map(function ($label) {
-                return mb_strtoupper($label->label_i18n) ?: $label->label;
+            $type['type'] = $labels->map(function ($label) {
+                /** @var ContactFieldLabel */
+                $cflabel = $label;
+
+                return mb_strtoupper($cflabel->label_i18n) ?: $cflabel->label;
             })->join(',');
         }
 

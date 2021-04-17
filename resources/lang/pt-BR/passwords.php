@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * ⚠️ Editing not allowed except for 'en' language.
+ *
+ * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ */
+
 return [
 
     /*
@@ -19,6 +25,6 @@ return [
     'user' => 'Não conseguimos encontrar nenhum usuário com o endereço de e-mail informado.',
     'changed' => 'Senha alterada com sucesso.',
     'invalid' => 'A senha que introduziu não está correta.',
-    'throttled' => 'Please wait before retrying.',
+    'throttled' => 'Por favor espere antes de tentar novamente.',
 
 ];

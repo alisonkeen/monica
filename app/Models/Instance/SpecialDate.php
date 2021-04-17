@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property bool $is_age_based
  * @property bool $is_year_unknown
- * @property \Illuminate\Support\Carbon|null $date
+ * @property \Carbon\Carbon|null $date
  */
 class SpecialDate extends Model
 {
@@ -110,16 +110,17 @@ class SpecialDate extends Model
     /**
      * Returns the age that the date represents, if the date is set and if it's
      * not based on a year we don't know.
+     *
      * @return int|null
      */
-    public function getAge()
+    public function getAge(): ?int
     {
         if (is_null($this->date)) {
-            return;
+            return null;
         }
 
         if ($this->is_year_unknown) {
-            return;
+            return null;
         }
 
         return $this->date->diffInYears(now());

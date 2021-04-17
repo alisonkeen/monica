@@ -68,6 +68,7 @@ class UpdateBirthdayInformation extends BaseService
         $this->data = $data;
         $this->validate($data);
 
+        /** @var Contact */
         $contact = Contact::where('account_id', $data['account_id'])
             ->findOrFail($data['contact_id']);
 
@@ -187,7 +188,8 @@ class UpdateBirthdayInformation extends BaseService
                 'frequency_type' => 'year',
                 'frequency_number' => 1,
                 'title' => trans(
-                    'people.people_add_birthday_reminder',
+                    ($data['is_deceased'] ?
+                        'people.people_add_birthday_reminder_deceased' : 'people.people_add_birthday_reminder'),
                     ['name' => $contact->first_name]
                 ),
                 'delible' => false,

@@ -50,9 +50,11 @@ class ApiContactController extends ApiController
             try {
                 $contacts = SearchHelper::searchContacts(
                     $needle,
-                    $this->getLimitPerPage(),
-                    $this->sort.' '.$this->sortDirection
-                );
+                    $this->sort,
+                    $this->sortDirection
+                )
+                    ->real()
+                    ->paginate($this->getLimitPerPage());
             } catch (QueryException $e) {
                 return $this->respondInvalidQuery();
             }
@@ -144,6 +146,7 @@ class ApiContactController extends ApiController
                     [
                         'contact_id' => $contactId,
                         'account_id' => auth()->user()->account_id,
+                        'author_id' => auth()->user()->id,
                     ]
             );
         } catch (ModelNotFoundException $e) {

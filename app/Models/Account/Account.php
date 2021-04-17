@@ -91,9 +91,24 @@ class Account extends Model
      *
      * @return HasMany
      */
-    public function contacts()
+    public function allContacts()
     {
         return $this->hasMany(Contact::class);
+    }
+
+    /**
+     * Get the addressBook's contacts.
+     *
+     * @param string|null $addressBookName
+     * @return HasMany<Contact>
+     */
+    public function contacts(string $addressBookName = null)
+    {
+        $contacts = $this->allContacts();
+
+        return $addressBookName
+            ? $contacts->addressBook($this->id, $addressBookName)
+            : $contacts->addressBook();
     }
 
     /**
@@ -695,12 +710,12 @@ class Account extends Model
      *
      * @throws ModelNotFoundException
      */
-    public function getFirstLocale()
+    public function getFirstLocale(): ?string
     {
         try {
             $user = $this->users()->firstOrFail();
         } catch (ModelNotFoundException $e) {
-            return;
+            return null;
         }
 
         return $user->locale;

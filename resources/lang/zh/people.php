@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * ⚠️ Editing not allowed except for 'en' language.
+ *
+ * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ */
+
 return [
 
     //index
@@ -26,7 +32,7 @@ return [
     'people_search_no_results' => '未找到任何结果',
     'people_search_next' => '下一页',
     'people_search_prev' => '上一页',
-    'people_search_rows_per_page' => '每页行数:',
+    'people_search_rows_per_page' => 'Rows per page',
     'people_search_of' => '/',
     'people_search_page' => '页',
     'people_search_all' => '所有',
@@ -51,7 +57,8 @@ return [
     'people_delete_success' => '联系人已被删除',
     'people_delete_message' => '删除联系人',
     'people_delete_confirmation' => '确实要删除此联系人吗？删除是永久性的。',
-    'people_add_birthday_reminder' => '祝: name生日快乐',
+    'people_add_birthday_reminder' => '祝 :name 生日快乐',
+    'people_add_birthday_reminder_deceased' => 'On this date, :name, would have celebrated his birthday',
     'people_add_import' => '是否要 <a href=":url">导入您的联系人</a>？',
     'people_edit_email_error' => '您的联系人中已经有人使用此电子邮件，请更换一个',
     'people_export' => '导出为 vCard',
@@ -427,6 +434,11 @@ return [
     'life_event_delete_description' => '确实要删除此生活事件吗？删除是永久性的。',
     'life_event_delete_success' => '事件已删除',
     'life_event_date_it_happened' => '发生日期',
+    'life_event_category_work_education' => 'Work & education',
+    'life_event_category_family_relationships' => 'Family & relationships',
+    'life_event_category_home_living' => 'Home & living',
+    'life_event_category_health_wellness' => 'Health & wellness',
+    'life_event_category_travel_experiences' => 'Travel & experiences',
     'life_event_sentence_new_job' => '开始了新的工作',
     'life_event_sentence_retirement' => '退休',
     'life_event_sentence_new_school' => '开始上学',
@@ -488,6 +500,8 @@ return [
     'photo_current_profile_pic' => '目前头像',
     'photo_make_profile_pic' => '制作头像',
     'photo_delete' => '删除照片',
+    'photo_next' => 'Next photo ❯',
+    'photo_previous' => '❮ Previous photo',
 
     // Avatars
     'avatar_change_title' => '更换头像',
@@ -497,6 +511,7 @@ return [
     'avatar_gravatar' => '此用户的电子邮件地址 与Gravatar关联 。 <a href="https://gravatar.com/">Gravatar</a> 是全球通用的头像服务。',
     'avatar_current' => '保持当前头像',
     'avatar_photo' => '从您上传的照片',
+    'avatar_crop_new_avatar_photo' => 'Crop new avatar photo',
 
     // emotions
     'emotion_this_made_me_feel' => '这让你觉得...',

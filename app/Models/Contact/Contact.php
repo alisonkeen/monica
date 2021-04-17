@@ -2,7 +2,7 @@
 
 namespace App\Models\Contact;
 
-use Carbon\Carbon;
+use DateTime;
 use App\Traits\Searchable;
 use Illuminate\Support\Str;
 use App\Helpers\LocaleHelper;
@@ -11,15 +11,18 @@ use App\Models\Journal\Entry;
 use function Safe\preg_split;
 use App\Helpers\StorageHelper;
 use App\Helpers\WeatherHelper;
+use Illuminate\Support\Carbon;
 use App\Models\Account\Account;
 use App\Models\Account\Weather;
 use App\Models\Account\Activity;
 use App\Models\Instance\AuditLog;
 use function Safe\preg_match_all;
 use Illuminate\Support\Collection;
+use App\Models\Account\AddressBook;
 use App\Models\Instance\SpecialDate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use IlluminateAgnostic\Arr\Support\Arr;
 use App\Models\Account\ActivityStatistic;
 use App\Models\Relationship\Relationship;
 use Illuminate\Database\Eloquent\Builder;
@@ -33,12 +36,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 /**
- * @property \App\Models\Instance\SpecialDate $birthdate
+ * @method static \Illuminate\Database\Eloquent\Builder search()
+ * @property \App\Models\Instance\SpecialDate|null $birthdate
  */
 class Contact extends Model
 {
     use Searchable;
 
+    /** @var array<string> */
     protected $dates = [
         'last_talked_to',
         'last_consulted_at',
@@ -47,7 +52,11 @@ class Contact extends Model
         'updated_at',
     ];
 
-    // The list of columns we want the Searchable trait to use.
+    /**
+     * The list of columns we want the Searchable trait to use.
+     *
+     * @var array<string>
+     */
     protected $searchable_columns = [
         'first_name',
         'middle_name',
@@ -57,13 +66,18 @@ class Contact extends Model
         'job',
     ];
 
-    // The list of columns we want the Searchable trait to select.
+    /**
+     * The list of columns we want the Searchable trait to select.
+     *
+     * @var array<string>
+     */
     protected $return_from_search = [
         'id',
         'first_name',
         'middle_name',
         'last_name',
         'nickname',
+        'description',
         'gender_id',
         'account_id',
         'created_at',
@@ -81,7 +95,7 @@ class Contact extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'first_name',
@@ -112,6 +126,8 @@ class Contact extends Model
 
     /**
      * Eager load account with every contact.
+     *
+     * @var array<string>
      */
     protected $with = [
         'account',
@@ -142,16 +158,6 @@ class Contact extends Model
     protected $nameOrder = 'firstname_lastname';
 
     /**
-     * Get Searchable Fields.
-     *
-     * @return array
-     */
-    public function getSearchableFields()
-    {
-        return $this->searchable_columns;
-    }
-
-    /**
      * Get the user associated with the contact.
      *
      * @return BelongsTo
@@ -159,6 +165,34 @@ class Contact extends Model
     public function account()
     {
         return $this->belongsTo(Account::class);
+    }
+
+    /**
+     * Get the address book associated with the contact.
+     *
+     * @return BelongsTo
+     */
+    public function addressBook()
+    {
+        return $this->belongsTo(AddressBook::class);
+    }
+
+    /**
+     * Get the list of contacts from the same address book as this contact.
+     *
+     * @return HasMany<self>|null
+     */
+    public function siblingContacts(): ?HasMany
+    {
+        if ($this->account) {
+            if ($this->addressBook) {
+                return $this->account->contacts($this->addressBook->name);
+            }
+
+            return $this->account->contacts();
+        }
+
+        return null;
     }
 
     /**
@@ -457,7 +491,7 @@ class Contact extends Model
      * @param string $criteria
      * @return Builder
      */
-    public function scopeSortedBy(Builder $builder, $criteria)
+    public function scopeSortedBy(Builder $builder, string $criteria): Builder
     {
         switch ($criteria) {
             case 'firstnameAZ':
@@ -469,24 +503,29 @@ class Contact extends Model
             case 'lastnameZA':
                 return $builder->orderBy('last_name', 'desc');
             case 'lastactivitydateNewtoOld':
-                $builder->leftJoin('activity_contact', 'contacts.id', '=', 'activity_contact.contact_id');
-                $builder->leftJoin('activities', 'activity_contact.activity_id', '=', 'activities.id');
-                $builder->groupBy('contacts.id');
-                $builder->orderBy('activities.happened_at', 'desc');
-                $builder->select(['*', 'contacts.id as id']);
-
-                return $builder;
+                return $this->sortedByLastActivity($builder, 'desc');
             case 'lastactivitydateOldtoNew':
-                $builder->leftJoin('activity_contact', 'contacts.id', '=', 'activity_contact.contact_id');
-                $builder->leftJoin('activities', 'activity_contact.activity_id', '=', 'activities.id');
-                $builder->groupBy('contacts.id');
-                $builder->orderBy('activities.happened_at', 'asc');
-                $builder->select(['*', 'contacts.id as id']);
-
-                return $builder;
+                return $this->sortedByLastActivity($builder, 'asc');
             default:
-                return $builder->orderBy('first_name', 'asc');
+                return $builder;
         }
+    }
+
+    /**
+     * Sort the contacts using last activity.
+     * @param Builder $builder
+     * @param string $order
+     * @return Builder
+     */
+    private function sortedByLastActivity(Builder $builder, string $order): Builder
+    {
+        $builder->leftJoin('activity_contact', 'contacts.id', '=', 'activity_contact.contact_id');
+        $builder->leftJoin('activities', 'activity_contact.activity_id', '=', 'activities.id');
+        $builder->groupBy('contacts.id');
+        $builder->orderBy('activities.happened_at', $order);
+        $builder->select(['*', 'contacts.id as id']);
+
+        return $builder;
     }
 
     /**
@@ -543,6 +582,28 @@ class Contact extends Model
     public function scopeNotActive($query)
     {
         return $query->where('is_active', 0);
+    }
+
+    /**
+     * Scope a query to only include contacts from given address book.
+     * 'null' value for address book is the default address book.
+     *
+     * @param Builder $query
+     * @param int|null $accountId
+     * @param string|null $addressBookName
+     * @return Builder
+     */
+    public function scopeAddressBook($query, int $accountId = null, string $addressBookName = null)
+    {
+        $addressBook = null;
+        if ($accountId && $addressBookName) {
+            $addressBook = AddressBook::where([
+                'account_id' => $accountId,
+                'name' => $addressBookName,
+            ])->first();
+        }
+
+        return $query->where('address_book_id', $addressBook ? $addressBook->id : null);
     }
 
     /**
@@ -688,6 +749,37 @@ class Contact extends Model
                     $completeName = $completeName.' ('.$this->nickname.')';
                 }
                 break;
+            case 'nickname_firstname_lastname':
+                $completeName = $this->first_name;
+
+                if (! is_null($this->middle_name)) {
+                    $completeName = $completeName.' '.$this->middle_name;
+                }
+
+                if (! is_null($this->last_name)) {
+                    $completeName = $completeName.' '.$this->last_name;
+                }
+
+                if (! is_null($this->nickname)) {
+                    $completeName = $this->nickname.' ('.$completeName.')';
+                }
+                break;
+            case 'nickname_lastname_firstname':
+                $completeName = '';
+                if (! is_null($this->last_name)) {
+                    $completeName = $this->last_name.' ';
+                }
+
+                $completeName = $completeName.$this->first_name;
+
+                if (! is_null($this->middle_name)) {
+                    $completeName = $completeName.' '.$this->middle_name;
+                }
+
+                if (! is_null($this->nickname)) {
+                    $completeName = $this->nickname.' ('.$completeName.')';
+                }
+                break;
             case 'lastname_nickname_firstname':
                 $completeName = '';
                 if (! is_null($this->last_name)) {
@@ -762,10 +854,10 @@ class Contact extends Model
      *
      * @return \DateTime|null
      */
-    public function getLastActivityDate()
+    public function getLastActivityDate(): ?DateTime
     {
         if ($this->activities->count() === 0) {
-            return;
+            return null;
         }
 
         $lastActivity = $this->activities->sortByDesc('happened_at')->first();
@@ -780,12 +872,12 @@ class Contact extends Model
      * @param  string $type
      * @return Collection|null
      */
-    public function getRelationshipsByRelationshipTypeGroup(string $type)
+    public function getRelationshipsByRelationshipTypeGroup(string $type): ?Collection
     {
         $relationshipTypeGroup = $this->account->getRelationshipTypeGroupByType($type);
 
         if (! $relationshipTypeGroup) {
-            return;
+            return null;
         }
 
         return $this->relationships->filter(function ($item) use ($type) {
@@ -942,6 +1034,38 @@ class Contact extends Model
     }
 
     /**
+     * Get the adorable avatar URL.
+     *
+     * @param string|null $value
+     * @return string|null
+     */
+    public function getAvatarAdorableUrlAttribute(?string $value): ?string
+    {
+        if (isset($value) && $value !== '') {
+            return Str::of($value)
+                ->after('https://api.adorable.io/avatars/')
+                ->ltrim('/')
+                ->start(Str::finish(config('monica.adorable_api'), '/'));
+        }
+
+        return null;
+    }
+
+    /**
+     * Set the adorable avatar URL.
+     *
+     * @param string|null $value
+     * @return void
+     */
+    public function setAvatarAdorableUrlAttribute(?string $value)
+    {
+        if (isset($value) && $value !== '') {
+            $value = Str::of($value)->replace(Str::finish(config('monica.adorable_api'), '/'), '');
+        }
+        $this->attributes['avatar_adorable_url'] = $value;
+    }
+
+    /**
      * Returns the URL of the avatar, properly sized.
      * The avatar can come from 4 sources:
      *  - default,
@@ -963,7 +1087,7 @@ class Contact extends Model
                 $avatarURL = $this->avatar_gravatar_url;
                 break;
             case 'photo':
-                $avatarURL = $this->avatarPhoto()->get()->first()->url();
+                $avatarURL = $this->avatarPhoto()->first()->url();
                 break;
             case 'default':
             default:
@@ -1037,6 +1161,7 @@ class Contact extends Model
 
     /**
      * Is this contact owed money?
+     *
      * @return bool
      */
     public function isOwedMoney()
@@ -1047,16 +1172,21 @@ class Contact extends Model
     /**
      * How much is the debt.
      *
-     * @return int
+     * @return int amount in storage value
      */
-    public function totalOutstandingDebtAmount()
+    public function totalOutstandingDebtAmount(): int
     {
         return $this
             ->debts()
-            ->where('status', '=', 'inprogress')
+            ->inProgress()
             ->getResults()
+            ->filter(function ($d) {
+                return Arr::has($d->attributes, 'amount');
+            })
             ->sum(function ($d) {
-                return $d->in_debt === 'yes' ? -$d->amount : $d->amount;
+                $amount = $d->attributes['amount'];
+
+                return $d->in_debt === 'yes' ? -$amount : $amount;
             });
     }
 
@@ -1074,10 +1204,10 @@ class Contact extends Model
      *
      * @return Contact|null
      */
-    public function getIntroducer()
+    public function getIntroducer(): ?self
     {
         if (! $this->first_met_through_contact_id) {
-            return;
+            return null;
         }
 
         try {
@@ -1085,7 +1215,7 @@ class Contact extends Model
             $contact = self::where('account_id', $this->account_id)
                 ->findOrFail($this->first_met_through_contact_id);
         } catch (ModelNotFoundException $e) {
-            return;
+            return null;
         }
 
         return $contact;
@@ -1101,10 +1231,10 @@ class Contact extends Model
      * @param int $day
      * @return SpecialDate|null
      */
-    public function setSpecialDate($occasion, int $year, int $month, int $day)
+    public function setSpecialDate($occasion, int $year, int $month, int $day): ?SpecialDate
     {
         if (empty($occasion)) {
-            return;
+            return null;
         }
 
         $specialDate = new SpecialDate;
@@ -1254,18 +1384,18 @@ class Contact extends Model
      *
      * @return int|null
      */
-    public function getAgeAtDeath()
+    public function getAgeAtDeath(): ?int
     {
         if (! $this->deceasedDate) {
-            return;
+            return null;
         }
 
         if ($this->deceasedDate->is_year_unknown == 1) {
-            return;
+            return null;
         }
 
         if (! $this->birthdate) {
-            return;
+            return null;
         }
 
         return $this->birthdate->date->diffInYears($this->deceasedDate->date);

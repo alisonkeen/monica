@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * ⚠️ Editing not allowed except for 'en' language.
+ *
+ * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ */
+
 return [
     'yes' => 'Evet',
     'no' => 'Hayır',
@@ -102,15 +108,15 @@ return [
 
     'error_title' => 'Amanın! Bir şeyler ters gitti.',
     'error_unauthorized' => 'Bu kaynağı düzenlemeye yetkiniz yok.',
-    'error_user_account' => 'This user does not belong to the given account.',
+    'error_user_account' => 'Kullanıcı belirli bir role sahip değil.',
     'error_save' => 'Verileri kaydetmeye çalışırken bir hata oluştu.',
     'error_try_again' => 'Bir şeyler ters gitti. Lütfen tekrar deneyin.',
     'error_id' => 'Hata kimliği: :id',
-    'error_unavailable' => 'Service unavailable',
+    'error_unavailable' => 'Hizmet kullanılamıyor',
     'error_maintenance' => 'Bakım devam ediyor. Birazdan geri döneceğiz.',
     'error_help' => 'Kısa süre sonra geri döneceğiz.',
     'error_twitter' => 'Yeniden çalışır olduğunda haberdar olmak için <a href="https://twitter.com/:twitter">Twitter hesabımızı</a> takip edin.',
-    'error_no_term' => 'There is no policy for this instance yet.',
+    'error_no_term' => 'Bu olay için henüz bir politika yok.',
 
     'default_save_success' => 'Veri kaydedildi.',
 
@@ -456,4 +462,10 @@ return [
     'dav_birthdays_description' => ':name kişisinin kişilerinin doğum günleri',
     'dav_tasks' => 'Görevler',
     'dav_tasks_description' => ':name kişisinin görevleri',
+
+    // contact list
+    'contact_list_avatar' => 'Avatar',
+    'contact_list_name' => 'Contact',
+    'contact_list_description' => 'Description',
+
 ];

@@ -47,13 +47,12 @@
         </div>
         <div class="dtc" :class="[ dirltr ? 'tr' : 'tl' ]">
           <div class="pa2">
-            <toggle-button
-              :class="'module-'"
-              :value="module.active"
+            <form-toggle
+              v-model="module.active"
+              :iclass="'module-'"
               :disabled="limited"
-              :sync="true"
               :labels="true"
-              @change="toggle(module)"
+              @change="toggle(module, $event)"
             />
           </div>
         </div>
@@ -63,13 +62,7 @@
 </template>
 
 <script>
-import { ToggleButton } from 'vue-js-toggle-button';
-
 export default {
-
-  components: {
-    ToggleButton
-  },
 
   props: {
     limited: {
@@ -91,17 +84,10 @@ export default {
   },
 
   mounted() {
-    this.prepareComponent();
+    this.getModules();
   },
 
   methods: {
-    prepareComponent() {
-      this.getModules();
-      if (!this.limited) {
-        this.limited = false;
-      }
-    },
-
     getModules() {
       axios.get('settings/personalization/modules')
         .then(response => {
@@ -118,9 +104,7 @@ export default {
             text: '',
             type: 'success'
           });
-
-          var id = this.modules.findIndex(x => x.id === module.id);
-          this.$set(this.modules, id, response.data.data);
+          this.$set(module, 'active', response.data.data.active);
         });
     }
   }

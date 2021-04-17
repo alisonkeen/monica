@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * ⚠️ Editing not allowed except for 'en' language.
+ *
+ * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ */
+
 return [
 
     //index
@@ -26,7 +32,7 @@ return [
     'people_search_no_results' => 'Sonuç bulunamadı',
     'people_search_next' => 'Sonraki',
     'people_search_prev' => 'Önceki',
-    'people_search_rows_per_page' => 'Sayfa başına satır:',
+    'people_search_rows_per_page' => 'Rows per page',
     'people_search_of' => '/',
     'people_search_page' => 'Sayfa',
     'people_search_all' => 'Hepsi',
@@ -52,6 +58,7 @@ return [
     'people_delete_message' => 'Bağlantıyı Sil',
     'people_delete_confirmation' => 'Bu kişiyi silmek istediğinizden emin misiniz? Silinen kayıtlar geri alınamaz.',
     'people_add_birthday_reminder' => 'Mutlu yıllar diliyorum: isim',
+    'people_add_birthday_reminder_deceased' => 'Bu tarihte, :name doğum gününü kutlardı',
     'people_add_import' => '<a href=":url">Bağlantılarınızı aktarmak</a> istiyor musunuz?',
     'people_edit_email_error' => 'Bu e-mail adresine sahip bir kişi listenize kayıtlı. Lütfen farklı bir adres giriniz.',
     'people_export' => 'Vcard Formatında Çıkar',
@@ -240,7 +247,7 @@ return [
     'activity_type_just_hung_out' => 'sadece takıldık',
     'activity_type_watched_movie_at_home' => 'evde film izledik',
     'activity_type_talked_at_home' => 'sadece evde konuştuk',
-    'activity_type_did_sport_activities_together' => 'played a sport together',
+    'activity_type_did_sport_activities_together' => 'birlikte spor yapıldı',
     'activity_type_ate_at_his_place' => 'onların yerinde yemek yedik',
     'activity_type_went_bar' => 'bara gittik',
     'activity_type_ate_at_home' => 'evde yemek yedik',
@@ -427,6 +434,11 @@ return [
     'life_event_delete_description' => 'Bu yaşam olayını silmek istediğinizden emin misiniz? Silme işlemi geri alınamaz.',
     'life_event_delete_success' => 'Yaşam olayı silindi',
     'life_event_date_it_happened' => 'Meydana geldiği tarih',
+    'life_event_category_work_education' => 'İş & eğitim',
+    'life_event_category_family_relationships' => 'Aile & ilişkiler',
+    'life_event_category_home_living' => 'Ev & yaşam',
+    'life_event_category_health_wellness' => 'Sağlık & sıhhat',
+    'life_event_category_travel_experiences' => 'Seyahat & deneyimler',
     'life_event_sentence_new_job' => 'Yeni bir iş başlatmak',
     'life_event_sentence_retirement' => 'Emekli olmak',
     'life_event_sentence_new_school' => 'Okula başlamak',
@@ -457,7 +469,7 @@ return [
     'life_event_sentence_wear_glass_or_contact' => 'Gözlük veya lens takmaya başlamak',
     'life_event_sentence_broken_bone' => 'Bir kemiği kırmak',
     'life_event_sentence_removed_braces' => 'Diş tellerini kaldırmak',
-    'life_event_sentence_surgery' => 'Had surgery',
+    'life_event_sentence_surgery' => 'El cerrahisi',
     'life_event_sentence_dentist' => 'Dişçiye gitmek',
     'life_event_sentence_new_sport' => 'Bir spora başlamak',
     'life_event_sentence_new_hobby' => 'Bir hobiye başlamak',
@@ -488,6 +500,8 @@ return [
     'photo_current_profile_pic' => 'Mevcut profil resmi',
     'photo_make_profile_pic' => 'Profil resmi yapın',
     'photo_delete' => 'Fotoğrafı sil',
+    'photo_next' => 'Next photo ❯',
+    'photo_previous' => '❮ Previous photo',
 
     // Avatars
     'avatar_change_title' => 'Avatarınızı değiştirin',
@@ -497,23 +511,24 @@ return [
     'avatar_gravatar' => 'Bu kişinin e-posta adresiyle ilişkili Gravatar.<a href="https://gravatar.com/">Gravatar</a>, kullanıcıların e-posta adreslerini fotoğraflarla ilişkilendirmelerini sağlayan global bir sistemdir.',
     'avatar_current' => 'Mevcut avatarı kullanın',
     'avatar_photo' => 'Yüklediğiniz bir fotoğraftan',
+    'avatar_crop_new_avatar_photo' => 'Yeni profil resmini kırp',
 
     // emotions
     'emotion_this_made_me_feel' => 'Bu size … hissettirdi',
 
     // logs
-    'auditlogs_link' => 'History',
-    'auditlogs_title' => 'Everything that happened to :name',
-    'auditlogs_breadcrumb' => 'History',
-    'auditlogs_author' => 'By :name on :date',
+    'auditlogs_link' => 'Geçmiş',
+    'auditlogs_title' => 'Bu hesaba ait tüm kayıtlar',
+    'auditlogs_breadcrumb' => 'Geçmiş',
+    'auditlogs_author' => ':date tarihinde :name adına göre',
 
     // contact field label
-    'contact_field_label_home' => 'Home',
-    'contact_field_label_work' => 'Work',
-    'contact_field_label_cell' => 'Mobile',
-    'contact_field_label_fax' => 'Fax',
-    'contact_field_label_pager' => 'Pager',
-    'contact_field_label_main' => 'Main',
-    'contact_field_label_other' => 'Other',
-    'contact_field_label_personal' => 'Personal',
+    'contact_field_label_home' => 'Ev',
+    'contact_field_label_work' => 'Iş',
+    'contact_field_label_cell' => 'Cep Telefonu',
+    'contact_field_label_fax' => 'Faks',
+    'contact_field_label_pager' => 'Çağrı Cihazı',
+    'contact_field_label_main' => 'Ana',
+    'contact_field_label_other' => 'Diğer',
+    'contact_field_label_personal' => 'Kişisel',
 ];

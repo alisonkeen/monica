@@ -9,11 +9,11 @@ use App\Services\BaseService;
 use App\Models\Account\Account;
 use App\Models\Contact\Document;
 use Illuminate\Support\Facades\DB;
-use App\Exceptions\NoAccountException;
 use Illuminate\Support\Facades\Storage;
 
 class ExportAccount extends BaseService
 {
+    /** @var string */
     protected $tempFileName;
 
     /**
@@ -142,10 +142,6 @@ SET FOREIGN_KEY_CHECKS=0;
             ->where($foreignKey, $data['account_id'])
             ->get();
 
-        if (! $accountData) {
-            throw new NoAccountException();
-        }
-
         if ($accountData->count() == 0) {
             return;
         }
@@ -189,7 +185,7 @@ SET FOREIGN_KEY_CHECKS=0;
     private function writeToTempFile(string $sql)
     {
         Storage::disk('local')
-            ->append($this->tempFileName, $sql, '');
+            ->append($this->tempFileName, $sql);
     }
 
     /**
@@ -567,6 +563,7 @@ SET FOREIGN_KEY_CHECKS=0;
             'in_debt',
             'status',
             'amount',
+            'currency_id',
             'reason',
             'created_at',
             'updated_at',
@@ -680,7 +677,8 @@ SET FOREIGN_KEY_CHECKS=0;
             'name',
             'comment',
             'url',
-            'value',
+            'amount',
+            'currency_id',
             'status',
             'date',
             'created_at',
@@ -1359,10 +1357,6 @@ SET FOREIGN_KEY_CHECKS=0;
             ->select('id')
             ->where('account_id', $data['account_id'])
             ->get();
-
-        if (! $contacts) {
-            throw new NoAccountException();
-        }
 
         if ($contacts->count() == 0) {
             return;

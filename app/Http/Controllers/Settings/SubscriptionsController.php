@@ -7,7 +7,6 @@ use App\Helpers\DateHelper;
 use Illuminate\Http\Request;
 use Laravel\Cashier\Cashier;
 use Laravel\Cashier\Payment;
-use Illuminate\Http\Response;
 use App\Helpers\AccountHelper;
 use App\Helpers\InstanceHelper;
 use App\Exceptions\StripeException;
@@ -42,7 +41,6 @@ class SubscriptionsController extends Controller
             ]);
         }
 
-        $planId = $account->getSubscribedPlanId();
         try {
             $nextBillingDate = $account->getNextBillingDate();
         } catch (StripeException $e) {
@@ -56,7 +54,7 @@ class SubscriptionsController extends Controller
         }
 
         return view('settings.subscriptions.account', [
-            'planInformation' => InstanceHelper::getPlanInformationFromConfig($planId),
+            'planInformation' => InstanceHelper::getPlanInformationFromConfig($subscription->name),
             'nextBillingDate' => $nextBillingDate,
             'subscription' => $subscription,
             'hasInvoices' => $hasInvoices,
@@ -178,7 +176,7 @@ class SubscriptionsController extends Controller
         }
 
         return view('settings.subscriptions.downgrade-checklist')
-            ->with('numberOfActiveContacts', $account->contacts()->active()->count())
+            ->with('numberOfActiveContacts', $account->allContacts()->active()->count())
             ->with('numberOfPendingInvitations', $account->invitations()->count())
             ->with('numberOfUsers', $account->users()->count())
             ->with('accountHasLimitations', AccountHelper::hasLimitations($account))
@@ -246,7 +244,7 @@ class SubscriptionsController extends Controller
      * Download the invoice as PDF.
      *
      * @param mixed $invoiceId
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function downloadInvoice($invoiceId)
     {
@@ -260,12 +258,12 @@ class SubscriptionsController extends Controller
      * Download the invoice as PDF.
      *
      * @param Request $request
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse|null
      */
-    public function forceCompletePaymentOnTesting(Request $request)
+    public function forceCompletePaymentOnTesting(Request $request): ?RedirectResponse
     {
         if (App::environment('production')) {
-            return;
+            return null;
         }
         $subscription = auth()->user()->account->getSubscribedPlan();
         $subscription->stripe_status = 'active';

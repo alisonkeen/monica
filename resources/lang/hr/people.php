@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * ⚠️ Editing not allowed except for 'en' language.
+ *
+ * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ */
+
 return [
 
     //index
@@ -26,7 +32,7 @@ return [
     'people_search_no_results' => 'No results found',
     'people_search_next' => 'Next',
     'people_search_prev' => 'Prev',
-    'people_search_rows_per_page' => 'Rows per page:',
+    'people_search_rows_per_page' => 'Rows per page',
     'people_search_of' => 'of',
     'people_search_page' => 'Page',
     'people_search_all' => 'All',
@@ -52,6 +58,7 @@ return [
     'people_delete_message' => 'Delete contact',
     'people_delete_confirmation' => 'Jeste li sigurni da želite izbrisati kontakt? Brisanje je trajno.',
     'people_add_birthday_reminder' => 'Zaželi sretan rođendan :name',
+    'people_add_birthday_reminder_deceased' => 'On this date, :name, would have celebrated his birthday',
     'people_add_import' => 'Želite li <a href=":url">uvesti svoje kontakte</a>?',
     'people_edit_email_error' => 'Već postoji kontakt s ovom email adresom. Molimo unesite drugu.',
     'people_export' => 'Izvezi kao vCard',
@@ -427,6 +434,11 @@ return [
     'life_event_delete_description' => 'Are you sure you want to delete this life event? Deletion is permanent.',
     'life_event_delete_success' => 'The life event has been deleted',
     'life_event_date_it_happened' => 'Date it happened',
+    'life_event_category_work_education' => 'Work & education',
+    'life_event_category_family_relationships' => 'Family & relationships',
+    'life_event_category_home_living' => 'Home & living',
+    'life_event_category_health_wellness' => 'Health & wellness',
+    'life_event_category_travel_experiences' => 'Travel & experiences',
     'life_event_sentence_new_job' => 'Started a new job',
     'life_event_sentence_retirement' => 'Retired',
     'life_event_sentence_new_school' => 'Started school',
@@ -488,6 +500,8 @@ return [
     'photo_current_profile_pic' => 'Current profile picture',
     'photo_make_profile_pic' => 'Make profile picture',
     'photo_delete' => 'Delete photo',
+    'photo_next' => 'Next photo ❯',
+    'photo_previous' => '❮ Previous photo',
 
     // Avatars
     'avatar_change_title' => 'Change your avatar',
@@ -497,6 +511,7 @@ return [
     'avatar_gravatar' => 'The Gravatar associated with the email address of this person. <a href="https://gravatar.com/">Gravatar</a> is a global system that lets users associate email addresses with photos.',
     'avatar_current' => 'Keep the current avatar',
     'avatar_photo' => 'From a photo that you upload',
+    'avatar_crop_new_avatar_photo' => 'Crop new avatar photo',
 
     // emotions
     'emotion_this_made_me_feel' => 'This made you feel…',

@@ -71,8 +71,7 @@
                     :existing-contacts="{{ \Safe\json_encode($existingContacts) }}"
                     :contact="{{ \Safe\json_encode($meContact) }}"
                     :limited="{{ \Safe\json_encode($accountHasLimitations) }}"
-                  >
-                  </me-contact>
+                  />
                   <small class="form-text text-muted">@lang('settings.me_help')</small>
                 </div>
               </div>
@@ -148,21 +147,21 @@
           </div>
         </div>
 
-        <form method="POST" action="{{ route('settings.reset') }}" class="settings-reset bg-white" onsubmit="return confirm('{{ trans('settings.reset_notice') }}')">
+        <form method="POST" action="{{ route('settings.reset') }}" class="settings-reset bg-washed-yellow" onsubmit="return confirm('{{ trans('settings.reset_notice') }}')">
           @csrf
 
           <h2>{{ trans('settings.reset_title') }}</h2>
           <p>{{ trans('settings.reset_desc') }}</p>
-          <button type="submit" class="btn">{{ trans('settings.reset_cta') }}</button>
+          <button type="submit" class="btn btn-warning">{{ trans('settings.reset_cta') }}</button>
         </form>
 
-        <form method="POST" action="{{ route('settings.delete') }}" class="settings-delete bg-white" onsubmit="return confirm('{{ trans('settings.delete_notice') }}')">
+        <form method="POST" action="{{ route('settings.delete') }}" class="settings-delete bg-pale-red" onsubmit="return confirm('{{ trans('settings.delete_notice') }}')">
           @csrf
 
           <h2>{{ trans('settings.delete_title') }}</h2>
           <p>{{ trans('settings.delete_desc') }}</p>
           <p>{{ trans('settings.delete_other_desc') }}</p>
-          <button type="submit" class="btn">{{ trans('settings.delete_cta') }}</button>
+          <button type="submit" class="btn btn-danger">{{ trans('settings.delete_cta') }}</button>
         </form>
 
       </div>

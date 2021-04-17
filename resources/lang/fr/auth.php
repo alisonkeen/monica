@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * ⚠️ Editing not allowed except for 'en' language.
+ *
+ * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ */
+
 return [
 
     /*
@@ -17,16 +23,15 @@ return [
     'throttle' => 'Tentatives de connexion trop nombreuses. Veuillez essayer de nouveau dans :seconds secondes.',
     'not_authorized' => 'Vous n’êtes pas autorisé à exécuter cette action',
     'signup_disabled' => 'L’inscription est actuellement désactivée',
+    'signup_error' => 'Une erreur est survenue lors de l’ajout de l’utilisateur',
     'back_homepage' => 'Retour à la page d’accueil',
     'mfa_auth_otp' => 'S’authentifier avec votre dispositif à deux facteurs',
-    'mfa_auth_u2f' => 'S’authentifier avec un dispositif U2F',
     'mfa_auth_webauthn' => 'Authentifier avec une clé de sécurité (WebAuthn)',
     '2fa_title' => 'Authentification à deux facteurs',
     '2fa_wrong_validation' => 'L’authentification à deux facteurs a échoué.',
     '2fa_one_time_password' => 'Code d’authentification à deux facteurs',
     '2fa_recuperation_code' => 'Entrez le code de récupération de deux facteurs',
     '2fa_otp_help' => 'Ouvrez votre application mobile pour l’authentification à deux facteurs et copiez le Qr code suivant',
-    'u2f_otp_extension' => 'U2F est supporté nativement sur Chrome, <a href="{urlquantum}" lang="en">Firefox</a>, et Opera. Sur les anciennes versions de Firefox, installez <a href="{urlext}">l’extension U2F</a>.',
 
     'login_to_account' => 'Connectez-vous à votre compte',
     'login_with_recovery' => 'Connexion avec un code de récupération',

@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * ⚠️ Editing not allowed except for 'en' language.
+ *
+ * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ */
+
 return [
 
     //index
@@ -26,7 +32,7 @@ return [
     'people_search_no_results' => 'Nenhum resultado encontrado',
     'people_search_next' => 'Próximo',
     'people_search_prev' => 'Anterior',
-    'people_search_rows_per_page' => 'Linhas por página:',
+    'people_search_rows_per_page' => 'Rows per page',
     'people_search_of' => 'de',
     'people_search_page' => 'Página',
     'people_search_all' => 'Todos',
@@ -52,6 +58,7 @@ return [
     'people_delete_message' => 'Excluir contato',
     'people_delete_confirmation' => 'Quer mesmo excluir este contato? Você não pode voltar atrás.',
     'people_add_birthday_reminder' => 'Deseje feliz aniversário para :name',
+    'people_add_birthday_reminder_deceased' => 'On this date, :name, would have celebrated his birthday',
     'people_add_import' => 'Você quer <a href=":url">importar seus contatos</a>?',
     'people_edit_email_error' => 'Já existe um contato em sua conta com esse e-mail. Por favor, escolha outro e-mail.',
     'people_export' => 'Exportar como vCard',
@@ -85,7 +92,7 @@ return [
     'stay_in_touch_premium' => 'Você precisa de uma assinatura ativa para utilizar esse recurso',
     'stay_in_touch_modal_title' => 'Manter contato',
     'stay_in_touch_modal_desc' => 'Podemos lembrar você por e-mail para manter contato com {firstname} em um determinado intervalo.',
-    'stay_in_touch_modal_label' => 'Send me an email every... {count} day|Send me an email every... {count} days',
+    'stay_in_touch_modal_label' => 'Envie-me um e-mail a cada... {count} dia|Envie-me um e-mail a cada... {count} dias',
 
     // Calls
     'modal_call_title' => 'Registrar ligação',
@@ -151,7 +158,7 @@ return [
     'information_edit_probably' => 'Acho que esta pessoa tem...',
     'information_edit_not_year' => 'Sei o dia e o mês do aniversário desta pessoa...',
     'information_edit_exact' => 'Sei a data de nascimento exata desta pessoa...',
-    'information_edit_birthdate_label' => 'Birthdate',
+    'information_edit_birthdate_label' => 'Data de nascimento',
     'information_no_work_defined' => 'Sem informação profissional',
     'information_work_at' => 'na :company',
     'work_add_cta' => 'Atualizar informação profissional',
@@ -220,23 +227,23 @@ return [
     'relationship_delete_confirmation' => 'Quer mesmo excluir este relacionamento? Você não pode voltar atrás.',
     'relationship_unlink_confirmation' => 'Quer mesmo excluir este relacionamento? Esta pessoa não será excluída, somente o relacionamento entre as duas.',
     'relationship_form_add_success' => 'O relacionamento foi estabelecido com sucesso.',
-    'relationship_form_deletion_success' => 'The relationship has been deleted.',
+    'relationship_form_deletion_success' => 'O relacionamento foi excluído.',
 
     // tasks
-    'tasks_title' => 'Tasks',
-    'tasks_blank_title' => 'You don’t have any tasks yet.',
-    'tasks_form_title' => 'Title',
-    'tasks_form_description' => 'Description (optional)',
-    'tasks_add_task' => 'Add a task',
-    'tasks_delete_success' => 'The task has been deleted successfully',
-    'tasks_complete_success' => 'The task has changed status successfully',
+    'tasks_title' => 'Tarefas',
+    'tasks_blank_title' => 'Você ainda não tem nenhuma tarefa.',
+    'tasks_form_title' => 'Título',
+    'tasks_form_description' => 'Descrição (Opcional)',
+    'tasks_add_task' => 'Adicionar tarefa',
+    'tasks_delete_success' => 'A tarefa foi excluída com sucesso',
+    'tasks_complete_success' => 'O status da tarefa foi alterado com sucesso',
 
     // activities
-    'activity_title' => 'Activities',
-    'activity_type_category_simple_activities' => 'Simple activities',
-    'activity_type_category_sport' => 'Sport',
-    'activity_type_category_food' => 'Food',
-    'activity_type_category_cultural_activities' => 'Cultural activities',
+    'activity_title' => 'Atividades',
+    'activity_type_category_simple_activities' => 'Atividades simples',
+    'activity_type_category_sport' => 'Esporte',
+    'activity_type_category_food' => 'Comida',
+    'activity_type_category_cultural_activities' => 'Atividades culturais',
     'activity_type_just_hung_out' => 'just hung out',
     'activity_type_watched_movie_at_home' => 'watched a movie at home',
     'activity_type_talked_at_home' => 'just talked at home',
@@ -301,7 +308,7 @@ return [
     'gifts_delete_cta' => 'Delete',
     'gifts_add_title' => 'Gift management for :name',
     'gifts_add_gift_idea' => 'Gift idea',
-    'gifts_add_gift_already_offered' => 'Gift offered',
+    'gifts_add_gift_already_offered' => 'Gift given',
     'gifts_add_gift_received' => 'Gift received',
     'gifts_add_gift_title' => 'What is this gift?',
     'gifts_add_gift_name' => 'Gift name',
@@ -315,11 +322,11 @@ return [
     'gifts_add_someone' => 'This gift is for someone in {name}’s family in particular',
     'gifts_delete_title' => 'Delete a gift',
     'gifts_ideas' => 'Gift ideas',
-    'gifts_offered' => 'Gifts offered',
+    'gifts_offered' => 'Gifts given',
     'gifts_offered_as_an_idea' => 'Mark as an idea',
     'gifts_received' => 'Gifts received',
     'gifts_view_comment' => 'View comment',
-    'gifts_mark_offered' => 'Mark as offered',
+    'gifts_mark_offered' => 'Mark as given',
     'gifts_update_success' => 'The gift has been updated successfully',
 
     // debts
@@ -427,6 +434,11 @@ return [
     'life_event_delete_description' => 'Are you sure you want to delete this life event? Deletion is permanent.',
     'life_event_delete_success' => 'The life event has been deleted',
     'life_event_date_it_happened' => 'Date it happened',
+    'life_event_category_work_education' => 'Work & education',
+    'life_event_category_family_relationships' => 'Family & relationships',
+    'life_event_category_home_living' => 'Home & living',
+    'life_event_category_health_wellness' => 'Health & wellness',
+    'life_event_category_travel_experiences' => 'Travel & experiences',
     'life_event_sentence_new_job' => 'Started a new job',
     'life_event_sentence_retirement' => 'Retired',
     'life_event_sentence_new_school' => 'Started school',
@@ -488,6 +500,8 @@ return [
     'photo_current_profile_pic' => 'Current profile picture',
     'photo_make_profile_pic' => 'Make profile picture',
     'photo_delete' => 'Delete photo',
+    'photo_next' => 'Próxima foto',
+    'photo_previous' => 'Foto anterior',
 
     // Avatars
     'avatar_change_title' => 'Change your avatar',
@@ -497,6 +511,7 @@ return [
     'avatar_gravatar' => 'The Gravatar associated with the email address of this person. <a href="https://gravatar.com/">Gravatar</a> is a global system that lets users associate email addresses with photos.',
     'avatar_current' => 'Keep the current avatar',
     'avatar_photo' => 'From a photo that you upload',
+    'avatar_crop_new_avatar_photo' => 'Crop new avatar photo',
 
     // emotions
     'emotion_this_made_me_feel' => 'This made you feel…',

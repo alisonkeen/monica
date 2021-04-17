@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * ⚠️ Editing not allowed except for 'en' language.
+ *
+ * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ */
+
 return [
     'yes' => 'Oui',
     'no' => 'Non',
@@ -456,4 +462,10 @@ return [
     'dav_birthdays_description' => 'Anniversaires des contacts de :name',
     'dav_tasks' => 'Tâches',
     'dav_tasks_description' => 'Tâches de :name',
+
+    // contact list
+    'contact_list_avatar' => 'Avatar',
+    'contact_list_name' => 'Contact',
+    'contact_list_description' => 'Description',
+
 ];

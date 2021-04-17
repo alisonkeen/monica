@@ -7,9 +7,12 @@ use App\Models\User\User;
 use App\Helpers\AuditLogHelper;
 use App\Models\Contact\Contact;
 use App\Models\Instance\AuditLog;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AuditLogHelperTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /** @test */
     public function it_prepares_a_collection_of_audit_logs_for_the_settings_page()
     {
@@ -27,7 +30,7 @@ class AuditLogHelperTest extends TestCase
         ]);
 
         $logs = $user->account->auditLogs;
-        $collection = AuditLogHelper::getCollectionOfAuditForSettings($logs);
+        $collection = AuditLogHelper::getCollectionOfAudits($logs);
 
         $this->assertEquals(
             2,
@@ -47,7 +50,7 @@ class AuditLogHelperTest extends TestCase
         ]);
 
         $logs = $user->account->auditLogs;
-        $collection = AuditLogHelper::getCollectionOfAuditForSettings($logs);
+        $collection = AuditLogHelper::getCollectionOfAudits($logs);
 
         $this->assertEquals(
             2,

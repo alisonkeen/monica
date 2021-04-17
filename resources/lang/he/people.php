@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * ⚠️ Editing not allowed except for 'en' language.
+ *
+ * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ */
+
 return [
 
     //index
@@ -26,7 +32,7 @@ return [
     'people_search_no_results' => 'לא נמצאו תוצאות',
     'people_search_next' => 'הבא',
     'people_search_prev' => 'הקודם',
-    'people_search_rows_per_page' => 'שורות בכל עמוד:',
+    'people_search_rows_per_page' => 'שורות בכל עמוד',
     'people_search_of' => 'מתוך',
     'people_search_page' => 'עמוד',
     'people_search_all' => 'הכול',
@@ -52,6 +58,7 @@ return [
     'people_delete_message' => 'מחיקת איש קשר',
     'people_delete_confirmation' => 'למחוק את איש הקשר הזה? מחיקה היא לצמיתות.',
     'people_add_birthday_reminder' => 'נא לאחל יום הולדת שמח ל־:name',
+    'people_add_birthday_reminder_deceased' => 'בתאריך הזה, אמור היה להחגג יום ההולדת של :name',
     'people_add_import' => 'ברצונך <a href=":url">לייבא את אנשי הקשר שלך</a>?',
     'people_edit_email_error' => 'כבר יש איש קשר בחשבון שלך עם כתובת הדוא״ל הזו. נא לבחור באחד אחר.',
     'people_export' => 'ייצוא כ־vCard',
@@ -80,7 +87,7 @@ return [
 
     // Stay in touch
     'stay_in_touch' => 'לשמור על קשר',
-    'stay_in_touch_frequency' => 'Stay in touch every day|Stay in touch every {count} days',
+    'stay_in_touch_frequency' => 'להישאר בקשר כל יום|להישאר בקשר כל יומיים|להישאר בקשר כל {count} ימים',
     'stay_in_touch_invalid' => 'התדירות חייבת להיות מספר גדול מ־0.',
     'stay_in_touch_premium' => 'עליך לשדרג את החשבון שלך כדי להשתמש בתכונה זו',
     'stay_in_touch_modal_title' => 'לשמור על קשר',
@@ -301,7 +308,7 @@ return [
     'gifts_delete_cta' => 'מחיקה',
     'gifts_add_title' => 'ניהול מתנות עבור :name',
     'gifts_add_gift_idea' => 'רעיון למתנה',
-    'gifts_add_gift_already_offered' => 'מתנה שהוצעה',
+    'gifts_add_gift_already_offered' => 'הוענקה מתנה',
     'gifts_add_gift_received' => 'מתנה שהתקבלה',
     'gifts_add_gift_title' => 'מה זו המתנה הזו?',
     'gifts_add_gift_name' => 'שם המתנה',
@@ -315,11 +322,11 @@ return [
     'gifts_add_someone' => 'מתנה זו מיועדת במיוחד למישהו מהמשפחה של {name}',
     'gifts_delete_title' => 'מחיקת מתנה',
     'gifts_ideas' => 'רעיונות למתנות',
-    'gifts_offered' => 'מתנות שהוצעו',
+    'gifts_offered' => 'הוענקו מתנות',
     'gifts_offered_as_an_idea' => 'סימון כרעיון',
     'gifts_received' => 'מתנות שהתקבלו',
     'gifts_view_comment' => 'צפייה בהערה',
-    'gifts_mark_offered' => 'סימון כהוצעה',
+    'gifts_mark_offered' => 'סימון שניתנה',
     'gifts_update_success' => 'המתנה עודכנה בהצלחה',
 
     // debts
@@ -427,6 +434,11 @@ return [
     'life_event_delete_description' => 'למחוק את האירוע המשמעותי הזה? מחיקה היא לצמיתות.',
     'life_event_delete_success' => 'האירוע המשמעותי נמחק',
     'life_event_date_it_happened' => 'התאריך בו זה התרחש',
+    'life_event_category_work_education' => 'עבודה והשכלה',
+    'life_event_category_family_relationships' => 'משפחה ויחסים',
+    'life_event_category_home_living' => 'בית ומחייה',
+    'life_event_category_health_wellness' => 'בריאות ורווחה',
+    'life_event_category_travel_experiences' => 'טיול וחוויות',
     'life_event_sentence_new_job' => 'התחלת עבודה חדשה',
     'life_event_sentence_retirement' => 'יציאה לפנסיה',
     'life_event_sentence_new_school' => 'התחלת לימודים',
@@ -488,6 +500,8 @@ return [
     'photo_current_profile_pic' => 'תמונת פרופיל נוכחית',
     'photo_make_profile_pic' => 'הכנת תמונת פרופיל',
     'photo_delete' => 'מחיקת תמונה',
+    'photo_next' => 'לתמונה הבאה ❯',
+    'photo_previous' => '❮ לתמונה הקודמת',
 
     // Avatars
     'avatar_change_title' => 'החלפת התמונה הייצוגית שלך',
@@ -497,6 +511,7 @@ return [
     'avatar_gravatar' => 'ה־Gravatar שמשויך לכתובת הדוא״ל של משתמש זה. <a href="https://gravatar.com/">Gravatar</a> היא מערכת גלובלית שמאפשרת למשתמשים לשייך כתובות דוא״ל לתמונות.',
     'avatar_current' => 'להשאיר את התמונה הייצוגית הנוכחית',
     'avatar_photo' => 'מתמונה שהעלית',
+    'avatar_crop_new_avatar_photo' => 'חיתוך התמונה הייצוגית החדשה',
 
     // emotions
     'emotion_this_made_me_feel' => 'התחושה שקיבלת היא…',

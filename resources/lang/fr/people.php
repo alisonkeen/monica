@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * ⚠️ Editing not allowed except for 'en' language.
+ *
+ * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ */
+
 return [
 
     //index
@@ -26,7 +32,7 @@ return [
     'people_search_no_results' => 'Aucun résultat',
     'people_search_next' => 'Suivant',
     'people_search_prev' => 'Précédent',
-    'people_search_rows_per_page' => 'Résultats par page:',
+    'people_search_rows_per_page' => 'Résultats par page',
     'people_search_of' => 'de',
     'people_search_page' => 'Page',
     'people_search_all' => 'Tous',
@@ -52,6 +58,7 @@ return [
     'people_delete_message' => 'Supprimer le contact',
     'people_delete_confirmation' => 'Êtes-vous sûr de vouloir supprimer ce contact ? La suppression est permanente.',
     'people_add_birthday_reminder' => 'Souhaiter un bon anniversaire à :name',
+    'people_add_birthday_reminder_deceased' => 'À cette date, :name aurait célébré son anniversaire',
     'people_add_import' => 'Souhaitez-vous <a href=":url">importer vos contacts</a> ?',
     'people_edit_email_error' => 'Il y a déjà quelqu’un dans votre compte avec cette adresse courriel. Merci d’en choisir une autre.',
     'people_export' => 'Exporter en tant que vCard',
@@ -427,6 +434,11 @@ return [
     'life_event_delete_description' => 'Êtes-vous sûr de vouloir supprimer cet évènement marquant ? La suppression est permanente.',
     'life_event_delete_success' => 'L’évènement marquant a été supprimé',
     'life_event_date_it_happened' => 'Date de l’évènement',
+    'life_event_category_work_education' => 'Travail & formation',
+    'life_event_category_family_relationships' => 'Famille & relations',
+    'life_event_category_home_living' => 'Foyer & vie domestique',
+    'life_event_category_health_wellness' => 'Santé & bien-être',
+    'life_event_category_travel_experiences' => 'Voyages & expériences',
     'life_event_sentence_new_job' => 'A commencé un nouveau travail',
     'life_event_sentence_retirement' => 'A pris sa retraite',
     'life_event_sentence_new_school' => 'A commencé l’école',
@@ -488,6 +500,8 @@ return [
     'photo_current_profile_pic' => 'Photo de profil actuelle',
     'photo_make_profile_pic' => 'Utiliser comme photo de profil',
     'photo_delete' => 'Supprimer la photo',
+    'photo_next' => 'Photo suivante ❯',
+    'photo_previous' => '❮ Photo précédente',
 
     // Avatars
     'avatar_change_title' => 'Changer de photo de profil',
@@ -497,6 +511,7 @@ return [
     'avatar_gravatar' => 'Le Gravatar associé à l’adresse courriel de cette personne. <a href="https://gravatar.com/">Gravatar</a> est un système global qui permet aux utilisateurs d’associer des adresses courriel avec des photos.',
     'avatar_current' => 'Conserver la photo de profil actuelle',
     'avatar_photo' => 'À partir d’une photo que vous téléchargez',
+    'avatar_crop_new_avatar_photo' => 'Recadrer la nouvelle photo de profil',
 
     // emotions
     'emotion_this_made_me_feel' => 'Cela vous fait sentir …',

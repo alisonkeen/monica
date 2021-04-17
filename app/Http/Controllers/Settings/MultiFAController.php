@@ -13,16 +13,20 @@ class MultiFAController extends Controller
 {
     use RedirectsUsers, JsonRespondController;
 
+    /**
+     * @var string
+     */
     protected $redirectTo = '/settings/security';
 
     /**
      * Session var name to store secret code.
+     * @var string
      */
     private $SESSION_TFA_SECRET = '2FA_secret';
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function enableTwoFactor(Request $request)
     {
@@ -46,7 +50,7 @@ class MultiFAController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function validateTwoFactor(Request $request)
     {
@@ -88,12 +92,13 @@ class MultiFAController extends Controller
      */
     public function disableTwoFactor(Request $request)
     {
+        // @phpstan-ignore-next-line
         return view('settings.security.2fa-disable');
     }
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function deactivateTwoFactor(Request $request)
     {

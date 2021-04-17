@@ -16,6 +16,9 @@ class PasswordChangeController extends Controller
 {
     use RedirectsUsers;
 
+    /**
+     * @var string
+     */
     protected $redirectTo = '/settings/security';
 
     /**
@@ -93,7 +96,7 @@ class PasswordChangeController extends Controller
      *
      * @return null|Authenticatable
      */
-    protected function getUser(array $credentials)
+    protected function getUser(array $credentials): ?Authenticatable
     {
         /** @var User */
         $user = Auth::user();
@@ -104,7 +107,7 @@ class PasswordChangeController extends Controller
             'password' => $credentials['password_current'],
         ])) {
             // authentication fails
-            return;
+            return null;
         }
 
         return $user;
@@ -132,7 +135,7 @@ class PasswordChangeController extends Controller
      * Get the response for a successful password change.
      *
      * @param string $response
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     protected function sendChangedResponse($response)
     {
@@ -144,7 +147,7 @@ class PasswordChangeController extends Controller
      * Get the response for a failed password change.
      *
      * @param string $response
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     protected function sendChangedFailedResponse($response)
     {

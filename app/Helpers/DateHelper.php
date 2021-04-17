@@ -2,8 +2,9 @@
 
 namespace App\Helpers;
 
-use Carbon\Carbon;
+use function Safe\date;
 use function Safe\strtotime;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,10 +19,10 @@ class DateHelper
      * @param string $timezone
      * @return Carbon|null
      */
-    public static function parseDateTime($date, $timezone = null)
+    public static function parseDateTime($date, $timezone = null): ?Carbon
     {
         if (is_null($date)) {
-            return;
+            return null;
         }
         if ($date instanceof Carbon) {
             // ok
@@ -32,7 +33,7 @@ class DateHelper
                 $date = Carbon::parse($date, $timezone);
             } catch (\Exception $e) {
                 // Parse error
-                return;
+                return null;
             }
         }
 
@@ -53,26 +54,25 @@ class DateHelper
      * @param string $timezone
      * @return Carbon|null
      */
-    public static function parseDate($date, $timezone = null)
+    public static function parseDate($date, $timezone = null): ?Carbon
     {
         if (! $date instanceof Carbon) {
             try {
                 $date = Carbon::parse($date);
             } catch (\Exception $e) {
                 // Parse error
-                return;
+                return null;
             }
         }
 
         $date = Carbon::create($date->year, $date->month, $date->day, 0, 0, 0, $timezone ?? $date->timezone);
-        $f = $date->getLocale();
 
         $appTimezone = config('app.timezone');
         if ($date->timezone !== $appTimezone) {
             $date->setTimezone($appTimezone);
         }
 
-        return $date;
+        return $date === false ? null : $date;
     }
 
     /**
@@ -81,10 +81,10 @@ class DateHelper
      * @param Carbon|\App\Models\Instance\SpecialDate|string|null $date
      * @return string|null
      */
-    public static function getTimestamp($date)
+    public static function getTimestamp($date): ?string
     {
         if (is_null($date)) {
-            return;
+            return null;
         }
         if ($date instanceof \App\Models\Instance\SpecialDate) {
             $date = $date->date;
@@ -102,10 +102,10 @@ class DateHelper
      * @param Carbon|\App\Models\Instance\SpecialDate|string|null $date
      * @return string|null
      */
-    public static function getDate($date)
+    public static function getDate($date): ?string
     {
         if (is_null($date)) {
-            return;
+            return null;
         }
         if ($date instanceof \App\Models\Instance\SpecialDate) {
             $date = $date->date;
@@ -177,7 +177,7 @@ class DateHelper
      * Return the day of the date according to the timezone of the user
      * like "Mon", or "Wed".
      *
-     * @param Carbon $date
+     * @param \Carbon\Carbon $date
      * @return string
      */
     public static function getShortDay($date): string
@@ -189,7 +189,7 @@ class DateHelper
      * Return a date according to the timezone of the user, in a short format
      * like "Oct 29".
      *
-     * @param Carbon $date
+     * @param \Carbon\Carbon $date
      * @return string
      */
     public static function getShortDateWithoutYear($date): string
@@ -201,7 +201,7 @@ class DateHelper
      * Return a date and the time according to the timezone of the user, in a short format
      * like "Oct 29, 1981 19:32".
      *
-     * @param Carbon $date
+     * @param \Carbon\Carbon $date
      * @return string
      */
     public static function getShortDateWithTime($date): string
@@ -225,12 +225,12 @@ class DateHelper
 
     /**
      * Add a given number of week/month/year to a date.
-     * @param Carbon $date      the start date
+     * @param \Carbon\Carbon $date      the start date
      * @param string $frequency week/month/year
      * @param int $number    the number of week/month/year to increment to
-     * @return Carbon
+     * @return \Carbon\Carbon
      */
-    public static function addTimeAccordingToFrequencyType(Carbon $date, string $frequency, int $number): Carbon
+    public static function addTimeAccordingToFrequencyType(\Carbon\Carbon $date, string $frequency, int $number): \Carbon\Carbon
     {
         switch ($frequency) {
             case 'week':
@@ -306,7 +306,7 @@ class DateHelper
      *
      * @return Collection
      */
-    public static function getListOfMonths()
+    public static function getListOfMonths(): Collection
     {
         $months = collect([]);
         $currentDate = Carbon::parse('2000-01-01');
@@ -328,7 +328,7 @@ class DateHelper
      *
      * @return Collection
      */
-    public static function getListOfDays()
+    public static function getListOfDays(): Collection
     {
         $days = collect([]);
         for ($day = 1; $day <= 31; $day++) {
@@ -343,7 +343,7 @@ class DateHelper
      *
      * @return Collection
      */
-    public static function getListOfHours()
+    public static function getListOfHours(): Collection
     {
         $currentDate = Carbon::parse('2000-01-01 00:00:00');
         $format = trans('format.full_hour', [], Carbon::getLocale());

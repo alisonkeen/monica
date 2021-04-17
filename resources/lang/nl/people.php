@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * ⚠️ Editing not allowed except for 'en' language.
+ *
+ * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ */
+
 return [
 
     //index
@@ -26,7 +32,7 @@ return [
     'people_search_no_results' => 'Geen resultaten gevonden',
     'people_search_next' => 'Volgende',
     'people_search_prev' => 'Vorige',
-    'people_search_rows_per_page' => 'Rijen per pagina:',
+    'people_search_rows_per_page' => 'Rows per page',
     'people_search_of' => 'van',
     'people_search_page' => 'Pagina',
     'people_search_all' => 'Iedereen',
@@ -52,6 +58,7 @@ return [
     'people_delete_message' => 'Contact verwijderen',
     'people_delete_confirmation' => 'Weet je zeker dat je dit contact wilt verwijderen? Dit is permanent.',
     'people_add_birthday_reminder' => 'Feliciteer :name met zijn/haar verjaardag',
+    'people_add_birthday_reminder_deceased' => 'Op deze datum zou :name zijn verjaardag hebben gevierd',
     'people_add_import' => 'Wil je <a href=":url">contacten importeren</a>?',
     'people_edit_email_error' => 'Er is al een contactpersoon in jouw account met dit e-mailadres. Kies alsjeblieft een ander.',
     'people_export' => 'Exporteer als vCard',
@@ -85,7 +92,7 @@ return [
     'stay_in_touch_premium' => 'Je moet je account upgraden om gebruik te maken van deze functie',
     'stay_in_touch_modal_title' => 'Blijf in contact',
     'stay_in_touch_modal_desc' => 'We kunnen je herinneren via e-mail om regelmatig in contact te blijven met {firstname}.',
-    'stay_in_touch_modal_label' => 'Stuur me elke...{count} dag een e-mail|Stuur me elke... {count} dagen een email',
+    'stay_in_touch_modal_label' => 'Stuur me elke dag een e-mail|Stuur me elke... {count} dagen een email',
 
     // Calls
     'modal_call_title' => 'Telefoongesprek registreren',
@@ -151,7 +158,7 @@ return [
     'information_edit_probably' => 'Deze persoon is waarschijnlijk...',
     'information_edit_not_year' => 'Ik weet de dag en de maand van de geboortedatum van deze persoon, maar niet het jaar…',
     'information_edit_exact' => 'Ik weet de exacte geboortedatum van deze persoon...',
-    'information_edit_birthdate_label' => 'Birthdate',
+    'information_edit_birthdate_label' => 'Geboortedatum',
     'information_no_work_defined' => 'Geen werkgegevens gedefinieerd',
     'information_work_at' => 'bij :company',
     'work_add_cta' => 'Werk informatie bijwerken',
@@ -201,7 +208,7 @@ return [
     'reminders_type_week' => 'week',
     'reminders_type_month' => 'maand',
     'reminders_type_year' => 'jaar',
-    'reminders_birthday' => 'Verjaardag van :naam',
+    'reminders_birthday' => 'Verjaardag van :name',
     'reminders_free_plan_warning' => 'Je hebt een gratis abonnement. Hiermee worden geen e-mails verzonden. Als je herinneringen per e-mail wilt ontvangen, upgrade dan je account.',
 
     // relationships
@@ -315,7 +322,7 @@ return [
     'gifts_add_someone' => 'Dit cadeau is voor iemand in {name}\'s familie',
     'gifts_delete_title' => 'Een cadeau verwijderen',
     'gifts_ideas' => 'Cadeau-ideeën',
-    'gifts_offered' => 'Cadeaus aangeboden',
+    'gifts_offered' => 'Cadeau aangeboden',
     'gifts_offered_as_an_idea' => 'Als idee markeren',
     'gifts_received' => 'Ontvangen cadeaus',
     'gifts_view_comment' => 'Opmerking bekijken',
@@ -427,6 +434,11 @@ return [
     'life_event_delete_description' => 'Weet je zeker dat je deze levensgebeurtenis wil verwijderen? Dit is permanent.',
     'life_event_delete_success' => 'De levensgebeurtenis is verwijderd',
     'life_event_date_it_happened' => 'Datum van de gebeurtenis',
+    'life_event_category_work_education' => 'Werk & onderwijs',
+    'life_event_category_family_relationships' => 'Familie & relaties',
+    'life_event_category_home_living' => 'Thuis & leven',
+    'life_event_category_health_wellness' => 'Gezondheid & welzijn',
+    'life_event_category_travel_experiences' => 'Reizen & ervaringen',
     'life_event_sentence_new_job' => 'Nieuwe baan gekregen',
     'life_event_sentence_retirement' => 'Met pensioen gegaan',
     'life_event_sentence_new_school' => 'Begonnen met school',
@@ -488,15 +500,18 @@ return [
     'photo_current_profile_pic' => 'Huidige profielfoto',
     'photo_make_profile_pic' => 'Stel in als profielfoto',
     'photo_delete' => 'Foto verwijderen',
+    'photo_next' => 'Next photo ❯',
+    'photo_previous' => '❮ Previous photo',
 
     // Avatars
-    'avatar_change_title' => 'Change your avatar',
+    'avatar_change_title' => 'Wijzig je profielfoto',
     'avatar_question' => 'Welke avatar wil je gebruiken?',
     'avatar_default_avatar' => 'De standaard-avatar',
     'avatar_adorable_avatar' => 'De Schattige avatar',
     'avatar_gravatar' => 'The Gravatar dat geassocieerd is met dit contact. <a href="https://gravatar.com/">Gravatar</a> is een wereldwijd systeem dat gebruikers hun emailadres laat associëren met hun foto\'s.',
     'avatar_current' => 'Huidige avatar houden',
     'avatar_photo' => 'Van een foto die je upload',
+    'avatar_crop_new_avatar_photo' => 'Snij nieuwe avatar foto bij',
 
     // emotions
     'emotion_this_made_me_feel' => 'Je voelde je…',

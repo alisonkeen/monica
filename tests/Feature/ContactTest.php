@@ -6,7 +6,6 @@ use Tests\FeatureTestCase;
 use App\Helpers\DateHelper;
 use App\Models\Contact\Tag;
 use App\Models\Contact\Gift;
-use App\Helpers\StringHelper;
 use App\Models\Contact\Gender;
 use App\Models\Contact\Contact;
 use App\Models\Account\Activity;
@@ -46,11 +45,9 @@ class ContactTest extends FeatureTestCase
                             ->inRandomOrder()
                             ->first();
 
-        $searchableFields = $randomContact->getSearchableFields();
         $keyword = $randomContact->first_name.' '.$randomContact->last_name;
 
-        $queryString = StringHelper::buildQuery($searchableFields, $keyword);
-        $records = Contact::whereRaw($queryString)->get();
+        $records = Contact::search($keyword, $user->account_id, 'id')->get();
 
         $this->assertGreaterThanOrEqual(1, count($records));
     }
@@ -63,11 +60,9 @@ class ContactTest extends FeatureTestCase
             'account_id' => $user->account_id,
         ]);
 
-        $searchableFields = $contacts[0]->getSearchableFields();
         $keyword = 'no_result_with_this_keyword';
 
-        $queryString = StringHelper::buildQuery($searchableFields, $keyword);
-        $records = Contact::whereRaw($queryString)->get();
+        $records = Contact::search($keyword, $user->account_id, 'id')->get();
 
         $this->assertEquals(0, count($records));
     }
@@ -234,7 +229,7 @@ class ContactTest extends FeatureTestCase
         $response->assertSee('1 contact');
     }
 
-    public function test_user_can_see_contacts_sorted_by_lastactivitydateNewtoOld()
+    private function setUpContacts()
     {
         $user = $this->signIn();
 
@@ -247,6 +242,11 @@ class ContactTest extends FeatureTestCase
                 'account_id' => $contact->account_id,
             ]);
         }
+    }
+
+    public function test_user_can_see_contacts_sorted_by_lastactivitydateNewtoOld()
+    {
+        $this->setUpContacts();
 
         $response = $this->get('/people/list?sort=lastactivitydateNewtoOld');
 
@@ -257,17 +257,7 @@ class ContactTest extends FeatureTestCase
 
     public function test_user_can_see_contacts_sorted_by_lastactivitydateOldtoNew()
     {
-        $user = $this->signIn();
-
-        $contacts = factory(Contact::class, 10)->create([
-            'account_id' => $user->account_id,
-        ]);
-
-        foreach ($contacts as $contact) {
-            factory(Activity::class)->create([
-                'account_id' => $contact->account_id,
-            ]);
-        }
+        $this->setUpContacts();
 
         $response = $this->get('/people/list?sort=lastactivitydateOldtoNew');
 
@@ -337,11 +327,13 @@ class ContactTest extends FeatureTestCase
             'reason' => $this->faker->sentence(),
         ];
 
-        $this->post(
+        $response = $this->post(
             route('people.debts.store', $contact),
             $debt
         );
+        $response->assertStatus(302);
 
+        $debt['amount'] = $debt['amount'] * 100;
         $this->assertDatabaseHas('debts',
             $debt + [
                 'contact_id' => $contact->id,
@@ -359,11 +351,13 @@ class ContactTest extends FeatureTestCase
             'reason' => $this->faker->sentence(),
         ];
 
-        $this->post(
+        $response = $this->post(
             route('people.debts.store', $contact),
             $debt
         );
+        $response->assertStatus(302);
 
+        $debt['amount'] = $debt['amount'] * 100;
         $this->assertDatabaseHas('debts',
             $debt + [
                 'contact_id' => $contact->id,
@@ -515,7 +509,7 @@ class ContactTest extends FeatureTestCase
           :date="\'\'"
           :reminder="false"
         >
-        </form-specialdeceased>');
+        </form-specialdeceased>', false);
     }
 
     public function test_edit_contact_with_specialdeceased()
@@ -538,7 +532,7 @@ class ContactTest extends FeatureTestCase
           :date="\''.$reminder->initial_date.'\'"
           :reminder="true"
         >
-        </form-specialdeceased>');
+        </form-specialdeceased>', false);
     }
 
     public function test_edit_contact_put_deceased()
@@ -673,11 +667,9 @@ class ContactTest extends FeatureTestCase
         $user->save();
 
         $gift = factory(Gift::class)->make();
-        $gift->value = '100';
+        $gift->amount = '100';
 
-        $this->assertEquals(
-            '$100.00',
-            $gift->amount
-        );
+        $this->assertEquals('100.00', $gift->amount);
+        $this->assertEquals('$100.00', $gift->displayValue);
     }
 }

@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * ⚠️ Editing not allowed except for 'en' language.
+ *
+ * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ */
+
 return [
 
     /*
@@ -17,16 +23,15 @@ return [
     'throttle' => 'Você realizou muitas tentativas de login. Por favor, tente novamente em :seconds segundos.',
     'not_authorized' => 'Você não está autorizado a executar esta ação',
     'signup_disabled' => 'Cadastro de novas contas desativado no momento',
+    'signup_error' => 'An error occured trying to register the user',
     'back_homepage' => 'Voltar à página inicial',
     'mfa_auth_otp' => 'Autenticar com dois fatores',
-    'mfa_auth_u2f' => 'Autenticar com um dispositivo U2F',
     'mfa_auth_webauthn' => 'Autenticar com uma chave de segurança (WebAuthn)',
     '2fa_title' => 'Autenticação de dois fatores',
     '2fa_wrong_validation' => 'Falha na autenticação de dois fatores.',
     '2fa_one_time_password' => 'Código de autenticação de dois fatores',
     '2fa_recuperation_code' => 'Digite um código de recuperação de dois fatores',
     '2fa_otp_help' => 'Abra seu aplicativo para autenticação de dois fatores e copie o código',
-    'u2f_otp_extension' => 'U2F é suportado de forma nativa no Chrome, <a href="{urlquantum}" lang="en">Firefox</a> e Opera. Em versões mais antigas do Firefox, instale a extensão <a href="{urlext}">U2F Support</a>',
 
     'login_to_account' => 'Entre na sua conta',
     'login_with_recovery' => 'Entrar com um código de recuperação',

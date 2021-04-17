@@ -50,7 +50,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -66,6 +66,8 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL', null),
+
+    'force_url' => (bool) env('APP_FORCE_URL', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -228,7 +230,6 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Gravatar' => Creativeorange\Gravatar\Facades\Gravatar::class,
-        'U2f' => Lahaxearnaud\U2f\U2fFacade::class,
     ],
 
 ];
